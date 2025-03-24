@@ -48,6 +48,7 @@ def main():
 
         updatable.update(dt)
 
+        # Taking down the lives
         for object_asteroid in asteroids:
             if player.collide(object_asteroid):
                 player.reset_position(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -59,6 +60,7 @@ def main():
                     print("Game Over")
                     exit()
 
+        # When player collide with asteroid it gets killed
         for object_asteroid in asteroids:
             for object_shot in shot:
                 if object_asteroid.collide(object_shot):
@@ -68,12 +70,17 @@ def main():
 
         screen.fill((0, 0, 0))
 
-        text_surface = font.render(str(score), True, (255, 255, 255))
-        text_rect = text_surface.get_rect(
+        # Displaying score
+        score_text = font.render(str(score), True, (255, 255, 255))
+        score_rect = score_text.get_rect(
             center=(SCREEN_WIDTH // 1.1, SCREEN_HEIGHT // 16)
         )
+        screen.blit(score_text, score_rect)
 
-        screen.blit(text_surface, text_rect)
+        # Displaying velocity
+        vel_text = font.render(f"Velocity: {str(player.vel)}", True, (255, 255, 255))
+        vel_rect = vel_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 8))
+        screen.blit(vel_text, vel_rect)
 
         for object in drawable:
             object.draw(screen)
